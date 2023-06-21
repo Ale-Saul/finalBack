@@ -12,4 +12,6 @@ export class UpdateCancionDto extends PartialType(CreateCancionDto) {
     genero: string;
     @IsNumber()
     duracion: number;
+    @IsString()
+    portada: string;
 }

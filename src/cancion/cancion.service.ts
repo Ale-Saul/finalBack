@@ -60,4 +60,10 @@ export class CancionService {
   async findAllByIds(cancionIds: number[]): Promise<Cancion[]> {
     return this.cancionRepository.findByIds(cancionIds);
   }
+
+  // Imagenes:
+  async uploadFile(portada: string){
+    // const file = new this.cancionRepository(cancion)
+    return await this.cancionRepository.save({portada:portada})
+  }
 }

@@ -1,12 +1,44 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ParseIntPipe,
+  UsePipes,
+  ValidationPipe,
+  UseInterceptors,
+  UploadedFile,
+} from '@nestjs/common';
 import { CancionService } from './cancion.service';
 import { CreateCancionDto } from './dto/create-cancion.dto';
 import { UpdateCancionDto } from './dto/update-cancion.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { ImagenFilter, renameImagen } from './helpers/imagenes.helper';
 
 @Controller('cancion')
 export class CancionController {
   constructor(private readonly cancionService: CancionService) {}
+
+  // Imagen:
+  @Post('upload')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './upload',
+        filename: renameImagen,
+      }),
+      fileFilter: ImagenFilter,
+    }),
+  )
+  uploadFile(@UploadedFile() file: Express.Multer.File) {
+    console.log(file);
+    // return await this.cancionService.uploadFile(file.filename);
+  }
 
   @Post()
   create(@Body() createCancionDto: CreateCancionDto) {
@@ -35,7 +67,10 @@ export class CancionController {
 
   @Patch(':id')
   @UsePipes(new ValidationPipe({ transform: true }))
-  update(@Param('id', ParseIntPipe) id: number, @Body() updateCancionDto: UpdateCancionDto) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateCancionDto: UpdateCancionDto,
+  ) {
     return this.cancionService.update(id, updateCancionDto);
   }
 

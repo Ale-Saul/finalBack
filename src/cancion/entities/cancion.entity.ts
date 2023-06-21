@@ -13,6 +13,9 @@ export class Cancion {
     genero: string;
     @Column()
     duracion: number;
+
+    @Column()
+    portada: string;
     
     @ManyToMany(() => Playlist, playlist => playlist.canciones , { cascade: true } )
     @JoinTable()
