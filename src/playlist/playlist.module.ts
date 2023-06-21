@@ -10,6 +10,7 @@ import { CancionModule } from 'src/cancion/cancion.module';
 @Module({
   imports: [TypeOrmModule.forFeature([Playlist]), CancionModule],
   controllers: [PlaylistController],
-  providers: [PlaylistService]
+  providers: [PlaylistService],
+  exports: [PlaylistService]
 })
 export class PlaylistModule {}
