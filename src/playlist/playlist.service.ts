@@ -8,7 +8,6 @@ import { Playlist } from './entities/playlist.entity';
 import { CancionService } from 'src/cancion/cancion.service';
 import { Cancion } from 'src/cancion/entities/cancion.entity';
 import { UsuarioService } from 'src/usuario/usuario.service';
-import { Usuario } from 'src/usuario/entities/usuario.entity';
 
 @Injectable()
 export class PlaylistService {
