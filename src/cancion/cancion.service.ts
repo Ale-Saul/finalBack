@@ -51,10 +51,10 @@ export class CancionService {
     .where('cancion.titulo LIKE :palabraClave', { palabraClave: `%${titulo}%` })
     .getMany();
   
-  if (canciones.length === 0) {
-    return `No se encontraron canciones con la palabra clave ${titulo}`;
-    } else {
-    return canciones;
+    if (canciones.length === 0) {
+      return `No se encontraron canciones con la palabra clave ${titulo}`;
+      } else {
+      return canciones;
     }
   }
   async findAllByIds(cancionIds: number[]): Promise<Cancion[]> {

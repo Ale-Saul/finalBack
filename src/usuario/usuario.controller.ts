@@ -25,6 +25,11 @@ export class UsuarioController {
     return this.usuarioService.findOne(+id);
   }
 
+  @Get('buscar/:nombre')
+  buscar(@Param('nombre') nombre: string) {
+    return this.usuarioService.buscar(nombre);
+  }
+
   @Patch(':id')
   update(@Param('id', ParseIntPipe) id: number, @Body() updateUsuarioDto: UpdateUsuarioDto) {
     return this.usuarioService.update(+id, updateUsuarioDto);

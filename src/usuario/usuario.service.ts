@@ -29,6 +29,19 @@ export class UsuarioService {
       return obj;
     }
   }
+  
+  async buscar(nombre: string) {
+    const usuario = await this.usuarioRepository
+    .createQueryBuilder('usuario')
+    .where('usuario.nombre LIKE :palabraClave', { palabraClave: `%${nombre}%` })
+    .getMany();
+    if (usuario.length === 0) {
+      return `No se encontraron canciones con la palabra clave ${nombre}`;
+      } else {
+      return usuario;
+    }
+  }
+
   findByCorreo(correo: string) {
     const usuario = this.usuarioRepository.find({where: {correo}});
     if (!usuario) {
