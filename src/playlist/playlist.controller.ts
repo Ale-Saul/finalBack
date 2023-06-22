@@ -12,9 +12,9 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 export class PlaylistController {
   constructor(private readonly playlistService: PlaylistService) {}
 
-  @Post()
-  create(@Body() createPlaylistDto: CreatePlaylistDto) {
-    return this.playlistService.create(createPlaylistDto);
+  @Post(':idUser')
+  create(@Param('idUser', ParseIntPipe) idUser: number, @Body() createPlaylistDto: CreatePlaylistDto) {
+    return this.playlistService.create(createPlaylistDto, idUser);
   }
   @Post('/cancion/:id')
   addCancion(@Param('id', ParseIntPipe) id: number, @Body() addSongDto: AddSongDto) {
@@ -31,9 +31,19 @@ export class PlaylistController {
     return this.playlistService.findOne(id);
   }
 
+  @Get('usuario/:id')
+  async findPlaylistsUsuario(@Param('id') id: number)  {
+    return this.playlistService.findPlaylistsUsuario(id);
+  }
+
   @Get('canciones/:id')
   async findSongs(@Param('id') id: number): Promise<Cancion[]> {
     return this.playlistService.findSongs(id);
+  }
+
+  @Get('buscar/:titulo')
+  buscar(@Param('titulo') titulo: string) {
+    return this.playlistService.buscar(titulo);
   }
 
   @Patch(':id')

@@ -19,13 +19,14 @@ export class UsuarioService {
     return this.usuarioRepository.find();
   }
 
-  findOne(id: number) {
-    const usuario = this.usuarioRepository.findOneById(id);
+  async findOne(id: number) {
+    const usuario = await this.usuarioRepository.findOneById(id);
+    const obj = JSON.parse(JSON.stringify(usuario));
     if (!usuario) {
       return `No se encontro el usuario con id ${id}`;
     }
     else {
-      return usuario;
+      return obj;
     }
   }
   findByCorreo(correo: string) {
